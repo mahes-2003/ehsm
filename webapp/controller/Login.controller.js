@@ -24,15 +24,29 @@ sap.ui.define([
             // /loginSet(EmployeeId='...',Password='...')
             var sPath = "/loginSet(EmployeeId='" + sEmployeeId + "',Password='" + sPassword + "')";
 
-            sap.ui.core.BusyIndicator.show();
+            sap.ui.core.BusyIndicator.show(0);
 
             oModel.read(sPath, {
                 success: function (oData) {
                     sap.ui.core.BusyIndicator.hide();
 
+                    console.log("Login response:", oData);
+
                     if (oData.Status === "Success") {
                         MessageToast.show("Login Successful");
-                        var oRouter = sap.ui.core.UIComponent.getRouterFor(that);
+
+                        // Get router from component
+                        var oRouter = that.getOwnerComponent().getRouter();
+
+                        if (!oRouter) {
+                            console.error("Router not found!");
+                            MessageToast.show("Navigation error: Router not initialized");
+                            return;
+                        }
+
+                        console.log("Navigating to dashboard with employeeId:", sEmployeeId);
+
+                        // Navigate to dashboard
                         oRouter.navTo("RouteDashboard", {
                             employeeId: sEmployeeId
                         });
@@ -42,6 +56,7 @@ sap.ui.define([
                 },
                 error: function (oError) {
                     sap.ui.core.BusyIndicator.hide();
+                    console.error("Login error:", oError);
                     var sMsg = "Login Failed";
                     try {
                         var oErr = JSON.parse(oError.responseText);

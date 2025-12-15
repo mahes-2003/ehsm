@@ -17,7 +17,7 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/sap/opu/odata/sap/ZEHSM_PORTAL_MAH1_SRV/",
+        "uri": "/sap/opu/odata/SAP/ZEHSM_PORTAL_MAH1_SRV/",
         "type": "OData",
         "settings": {
           "annotations": [],
