@@ -2,5 +2,22 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
     <Page id="page" title="{i18n>title}">
+        <content>
+            <VBox class="sapUiSmallMargin" width="auto" alignItems="Center" justifyContent="Center" height="100%">
+                <Panel width="400px" headerText="Safety Engineer Login">
+                    <content>
+                        <VBox>
+                            <Label text="Employee ID" labelFor="inpEmployeeId" design="Bold"/>
+                            <Input id="inpEmployeeId" placeholder="Enter Employee ID (e.g. 00000001)" width="100%"/>
+                            
+                            <Label text="Password" labelFor="inpPassword" design="Bold" class="sapUiSmallMarginTop"/>
+                            <Input id="inpPassword" placeholder="Enter Password" type="Password" width="100%"/>
+                            
+                            <Button text="Login" type="Emphasized" press="onLogin" class="sapUiMediumMarginTop" width="100%"/>
+                        </VBox>
+                    </content>
+                </Panel>
+            </VBox>
+        </content>
     </Page>
 </mvc:View>

@@ -1,0 +1,129 @@
+<mvc:View controllerName="com.kaar.ehsmportal.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:grid="sap.ui.layout.cssgrid">
+    <Page id="dashboardPage" title="{i18n>dashboardTitle}" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Title text="{i18n>welcomeMessage}" level="H2" class="sapUiSmallMarginBottom"/>
+                
+                <!-- Profile Section -->
+                <Panel headerText="{i18n>profileHeader}" class="sapUiSmallMarginBottom" width="auto">
+                     <headerToolbar>
+                         <OverflowToolbar>
+                             <Title text="{i18n>profileHeader}"/>
+                             <ToolbarSpacer/>
+                             <Button icon="sap-icon://detail-view" text="{i18n>viewDetailsButton}" press="onPressProfile"/>
+                         </OverflowToolbar>
+                     </headerToolbar>
+                     <content>
+                        <HBox alignItems="Center" justifyContent="SpaceBetween">
+                            <VBox>
+                                <Label text="{i18n>nameLabel}" design="Bold"/>
+                                <Text text="{entry>/FirstName} {entry>/LastName}"/>
+                                <Label text="{i18n>employeeIdLabel}" design="Bold" class="sapUiSmallMarginTop"/>
+                                <Text text="{entry>/EmployeeId}"/>
+                            </VBox>
+                             <VBox>
+                                <Label text="{i18n>emailLabel}" design="Bold"/>
+                                <Text text="{entry>/EmailId}"/>
+                                <Label text="{i18n>plantLabel}" design="Bold" class="sapUiSmallMarginTop"/>
+                                <Text text="{entry>/Plant}"/>
+                            </VBox>
+                            <VBox>
+                                <Label text="{i18n>jobTitleLabel}" design="Bold"/>
+                                <Text text="{entry>/Title}"/>
+                                 <Label text="{i18n>nationalityLabel}" design="Bold" class="sapUiSmallMarginTop"/>
+                                <Text text="{entry>/Nationality}"/>
+                            </VBox>
+                        </HBox>
+                    </content>
+                </Panel>
+
+                <grid:CSSGrid id="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="1rem">
+                    <!-- Profile Tile -->
+                     <GenericTile
+                        class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+                        header="{i18n>profileTileHeader}"
+                        subheader="{i18n>profileTileSubheader}"
+                        press="onPressProfile">
+                        <TileContent>
+                            <NumericContent value="1" icon="sap-icon://employee" valueColor="Good"/>
+                        </TileContent>
+                    </GenericTile>
+                    
+                    <!-- Incident Management Tile -->
+                     <GenericTile
+                        class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+                        header="{i18n>incidentsTileHeader}"
+                        subheader="{i18n>incidentsTileSubheader}"
+                        press="onPressIncident">
+                        <TileContent>
+                            <NumericContent value="{/IncidentCount}" icon="sap-icon://alert" indicator="Up" valueColor="Error"/>
+                        </TileContent>
+                    </GenericTile>
+
+                    <!-- Risk Assessment Tile -->
+                    <GenericTile
+                        class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
+                        header="{i18n>risksTileHeader}"
+                        subheader="{i18n>risksTileSubheader}"
+                        press="onPressRisk">
+                        <TileContent>
+                            <NumericContent value="{/RiskCount}" icon="sap-icon://quality-issue" indicator="Down" valueColor="Critical"/>
+                        </TileContent>
+                    </GenericTile>
+                </grid:CSSGrid>
+
+                <!-- Incidents Table (Initially generic, can be bound later or in a separate view) -->
+                <Panel headerText="{i18n>incidentsHeader}" expandable="true" expanded="true" class="sapUiSmallMarginTop">
+                     <Table id="incidentsTable" items="{path: 'incidents>/results'}">
+                        <columns>
+                            <Column><Text text="{i18n>idColumn}"/></Column>
+                            <Column><Text text="{i18n>descColumn}"/></Column>
+                            <Column><Text text="{i18n>categoryColumn}"/></Column>
+                             <Column><Text text="{i18n>statusColumn}"/></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{incidents>IncidentId}"/>
+                                    <Text text="{incidents>IncidentDescription}"/>
+                                    <Text text="{incidents>IncidentCategory}"/>
+                                    <ObjectStatus text="{incidents>IncidentStatus}" state="{path: 'incidents>IncidentStatus', formatter: '.formatter.statusState'}"/>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </Panel>
+
+                 <!-- Risks Table -->
+                <Panel headerText="{i18n>risksHeader}" expandable="true" expanded="true" class="sapUiSmallMarginTop">
+                     <Table id="risksTable" items="{path: 'risks>/results'}">
+                        <columns>
+                            <Column><Text text="{i18n>idColumn}"/></Column>
+                            <Column><Text text="{i18n>descColumn}"/></Column>
+                            <Column><Text text="{i18n>severityColumn}"/></Column>
+                             <Column><Text text="{i18n>measureColumn}"/></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{risks>RiskId}"/>
+                                    <Text text="{risks>RiskDescription}"/>
+                                    <ObjectStatus text="{risks>RiskSeverity}" state="{path: 'risks>RiskSeverity', formatter: '.formatter.riskState'}"/>
+                                    <Text text="{risks>MitigationMeasures}"/>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </Panel>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

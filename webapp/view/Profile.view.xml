@@ -1,0 +1,134 @@
+<mvc:View controllerName="com.kaar.ehsmportal.controller.Profile"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form">
+    <Page id="profilePage" title="{i18n>profilePageTitle}" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <ObjectHeader
+                    title="{profile>/FirstName} {profile>/LastName}"
+                    number="{profile>/EmployeeId}"
+                    numberUnit="{i18n>employeeIdUnit}"
+                    class="sapUiSmallMarginBottom">
+                    <attributes>
+                        <ObjectAttribute title="{i18n>emailLabel}" text="{profile>/EmailId}"/>
+                        <ObjectAttribute title="{i18n>plantLabel}" text="{profile>/Plant}"/>
+                        <ObjectAttribute title="{i18n>companyLabel}" text="{profile>/Company}"/>
+                    </attributes>
+                </ObjectHeader>
+
+                <Panel headerText="{i18n>personalInfoHeader}" class="sapUiSmallMarginTop">
+                    <content>
+                        <form:SimpleForm
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="4"
+                            labelSpanL="4"
+                            labelSpanM="4"
+                            labelSpanS="12"
+                            emptySpanXL="0"
+                            emptySpanL="0"
+                            emptySpanM="0"
+                            emptySpanS="0"
+                            columnsXL="2"
+                            columnsL="2"
+                            columnsM="1">
+                            <form:content>
+                                <Label text="{i18n>firstNameLabel}"/>
+                                <Text text="{profile>/FirstName}"/>
+                                
+                                <Label text="{i18n>lastNameLabel}"/>
+                                <Text text="{profile>/LastName}"/>
+                                
+                                <Label text="{i18n>genderLabel}"/>
+                                <Text text="{profile>/Gender}"/>
+                                
+                                <Label text="{i18n>nationalityLabel}"/>
+                                <Text text="{profile>/Nationality}"/>
+                                
+                                <Label text="{i18n>emailLabel}"/>
+                                <Text text="{profile>/EmailId}"/>
+                                
+                                <Label text="{i18n>commLanguageLabel}"/>
+                                <Text text="{profile>/CommLanguage}"/>
+                            </form:content>
+                        </form:SimpleForm>
+                    </content>
+                </Panel>
+
+                <Panel headerText="{i18n>addressInfoHeader}" class="sapUiSmallMarginTop">
+                    <content>
+                        <form:SimpleForm
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="4"
+                            labelSpanL="4"
+                            labelSpanM="4"
+                            labelSpanS="12"
+                            emptySpanXL="0"
+                            emptySpanL="0"
+                            emptySpanM="0"
+                            emptySpanS="0"
+                            columnsXL="2"
+                            columnsL="2"
+                            columnsM="1">
+                            <form:content>
+                                <Label text="{i18n>streetLabel}"/>
+                                <Text text="{profile>/Street}"/>
+                                
+                                <Label text="{i18n>cityLabel}"/>
+                                <Text text="{profile>/City}"/>
+                                
+                                <Label text="{i18n>countryLabel}"/>
+                                <Text text="{profile>/Country}"/>
+                                
+                                <Label text="{i18n>postalCodeLabel}"/>
+                                <Text text="{profile>/PostalCode}"/>
+                            </form:content>
+                        </form:SimpleForm>
+                    </content>
+                </Panel>
+
+                <Panel headerText="{i18n>employmentInfoHeader}" class="sapUiSmallMarginTop">
+                    <content>
+                        <form:SimpleForm
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="4"
+                            labelSpanL="4"
+                            labelSpanM="4"
+                            labelSpanS="12"
+                            emptySpanXL="0"
+                            emptySpanL="0"
+                            emptySpanM="0"
+                            emptySpanS="0"
+                            columnsXL="2"
+                            columnsL="2"
+                            columnsM="1">
+                            <form:content>
+                                <Label text="{i18n>employeeIdLabel}"/>
+                                <Text text="{profile>/EmployeeId}"/>
+                                
+                                <Label text="{i18n>plantLabel}"/>
+                                <Text text="{profile>/Plant}"/>
+                                
+                                <Label text="{i18n>companyLabel}"/>
+                                <Text text="{profile>/Company}"/>
+                                
+                                <Label text="{i18n>jobTitleLabel}"/>
+                                <Text text="{profile>/Title}"/>
+                                
+                                <Label text="{i18n>employeeStatusLabel}"/>
+                                <Text text="{profile>/EmployeeStatus}"/>
+                                
+                                <Label text="{i18n>startDateLabel}"/>
+                                <Text text="{path: 'profile>/StartDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd/MM/yyyy'}}"/>
+                            </form:content>
+                        </form:SimpleForm>
+                    </content>
+                </Panel>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

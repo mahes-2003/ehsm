@@ -95,12 +95,56 @@
           "target": [
             "TargetLogin"
           ]
+        },
+        {
+          "name": "RouteDashboard",
+          "pattern": "dashboard/{employeeId}",
+          "target": [
+            "TargetDashboard"
+          ]
+        },
+        {
+          "name": "RouteProfile",
+          "pattern": "profile/{employeeId}",
+          "target": [
+            "TargetProfile"
+          ]
+        },
+        {
+          "name": "RouteIncidentList",
+          "pattern": "incidents/{employeeId}",
+          "target": [
+            "TargetIncidentList"
+          ]
+        },
+        {
+          "name": "RouteRiskList",
+          "pattern": "risks/{employeeId}",
+          "target": [
+            "TargetRiskList"
+          ]
         }
       ],
       "targets": {
         "TargetLogin": {
           "id": "Login",
           "name": "Login"
+        },
+        "TargetDashboard": {
+          "id": "Dashboard",
+          "name": "Dashboard"
+        },
+        "TargetProfile": {
+          "id": "Profile",
+          "name": "Profile"
+        },
+        "TargetIncidentList": {
+          "id": "IncidentList",
+          "name": "IncidentList"
+        },
+        "TargetRiskList": {
+          "id": "RiskList",
+          "name": "RiskList"
         }
       }
     },

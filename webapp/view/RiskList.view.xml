@@ -1,0 +1,65 @@
+<mvc:View controllerName="com.kaar.ehsmportal.controller.RiskList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="riskListPage" title="{i18n>riskListPageTitle}" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Table id="risksTable" 
+                       items="{risks>/results}"
+                       growing="true"
+                       growingThreshold="20"
+                       mode="SingleSelectMaster">
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <Title text="{i18n>riskListTitle}" level="H2"/>
+                            <ToolbarSpacer/>
+                            <Text text="{i18n>totalRisksLabel}: {risks>/results/length}"/>
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column width="12em">
+                            <Text text="{i18n>riskIdColumn}"/>
+                        </Column>
+                        <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Text text="{i18n>descColumn}"/>
+                        </Column>
+                        <Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+                            <Text text="{i18n>categoryColumn}"/>
+                        </Column>
+                        <Column hAlign="Center">
+                            <Text text="{i18n>severityColumn}"/>
+                        </Column>
+                        <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                            <Text text="{i18n>likelihoodColumn}"/>
+                        </Column>
+                        <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Text text="{i18n>measureColumn}"/>
+                        </Column>
+                        <Column minScreenWidth="Desktop" demandPopin="true">
+                            <Text text="{i18n>identificationDateColumn}"/>
+                        </Column>
+                        <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Text text="{i18n>createdByColumn}"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <ObjectIdentifier title="{risks>RiskId}"/>
+                                <Text text="{risks>RiskDescription}"/>
+                                <Text text="{risks>RiskCategory}"/>
+                                <ObjectStatus 
+                                    text="{risks>RiskSeverity}" 
+                                    state="{path: 'risks>RiskSeverity', formatter: '.formatter.riskState'}"/>
+                                <Text text="{risks>Likelihood}"/>
+                                <Text text="{risks>MitigationMeasures}"/>
+                                <Text text="{path: 'risks>RiskIdentificationDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd/MM/yyyy'}}"/>
+                                <Text text="{risks>CreatedBy}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
