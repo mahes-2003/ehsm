@@ -1,8 +1,6 @@
 <mvc:View controllerName="com.kaar.ehsmportal.controller.Dashboard"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:f="sap.f"
-    xmlns:card="sap.f.cards"
     xmlns:core="sap.ui.core"
     xmlns:layout="sap.ui.layout"
     xmlns:grid="sap.ui.layout.cssgrid">

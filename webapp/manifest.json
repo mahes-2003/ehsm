@@ -17,7 +17,7 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/sap/opu/odata/SAP/ZEHSM_PORTAL_MAH1_SRV/",
+        "uri": "/sap/opu/odata/sap/ZQUALITY_2003_CDS/",
         "type": "OData",
         "settings": {
           "annotations": [],

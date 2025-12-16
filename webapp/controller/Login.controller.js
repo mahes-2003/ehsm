@@ -21,8 +21,21 @@ sap.ui.define([
             var oModel = this.getOwnerComponent().getModel();
             var that = this;
 
-            // /loginSet(EmployeeId='...',Password='...')
-            var sPath = "/loginSet(EmployeeId='" + sEmployeeId + "',Password='" + sPassword + "')";
+            // /ZQUALITY_2003(username='...',password='...')
+            // Note: Service metadata might define key as just username, param as password?
+            // Logs showed: ZQUALITY_2003(username='1') and properties contain password.
+            // Let's assume the key is just username based on ID: ZQUALITY_2003('1')
+            // But usually we need to pass password for validation. 
+            // The user request was /ZQUALITY_2003(username='1') - this implies password is not part of key?
+            // Wait, response shows <d:password>1234</d:password>.
+            // Use function import or entity read? The log shows entity read.
+            // Let's try to pass both if possible or just username if that's what user did.
+            // User REQ: /ZQUALITY_2003(username='1')
+            // So I should use that path. But how is password validated? Maybe headers or filtered?
+            // OR maybe I should assume the user log missed the password part in URL or it's just a lookup?
+            // "ZQUALITY_2003" seems to be the EntitySet.
+
+            var sPath = "/ZQUALITY_2003(username='" + sEmployeeId + "')";
 
             sap.ui.core.BusyIndicator.show(0);
 
@@ -32,7 +45,8 @@ sap.ui.define([
 
                     console.log("Login response:", oData);
 
-                    if (oData.Status === "Success") {
+                    // Check login_status instead of Status
+                    if (oData.login_status === "Success") {
                         MessageToast.show("Login Successful");
 
                         // Use UIComponent to get router for this controller's component
@@ -56,7 +70,7 @@ sap.ui.define([
                             employeeId: sEmployeeId
                         });
                     } else {
-                        MessageToast.show("Validation Failed: " + (oData.Status || "Unknown Error"));
+                        MessageToast.show("Validation Failed: " + (oData.login_status || "Unknown Error"));
                     }
                 },
                 error: function (oError) {
