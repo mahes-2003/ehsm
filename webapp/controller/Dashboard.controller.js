@@ -43,6 +43,14 @@ sap.ui.define([
             var oModel = this.getOwnerComponent().getModel();
             var that = this;
 
+            console.log("Loading dashboard data for:", sEmployeeId);
+            console.log("Service URL:", oModel.sServiceUrl);
+
+            // Note: The new Quality Service (ZQUALITY_2003_CDS) might not have profileSet/incidentSet/riskSet.
+            // Commenting out these calls to prevent 404 errors until new endpoints are known.
+            // The dashboard counts will remain 0.
+
+            /*
             // 1. Fetch Profile
             var sProfilePath = "/profileSet(EmployeeId='" + sEmployeeId + "')";
             oModel.read(sProfilePath, {
@@ -61,11 +69,11 @@ sap.ui.define([
                 success: function (oData) {
                     var oLocalModel = that.getView().getModel("incidents");
                     oLocalModel.setData({ results: oData.results });
-
+                    
                     that.getView().getModel("view").setProperty("/IncidentCount", oData.results.length);
                 },
                 error: function (oError) {
-                    console.error("Error fetching incidents", oError);
+                    console.log("Error fetching incidents (expected if service changed)", oError);
                 }
             });
 
@@ -80,9 +88,10 @@ sap.ui.define([
                     that.getView().getModel("view").setProperty("/RiskCount", oData.results.length);
                 },
                 error: function (oError) {
-                    console.error("Error fetching risks", oError);
+                     console.log("Error fetching risks (expected if service changed)", oError);
                 }
             });
+            */
         },
 
         onNavBack: function () {
