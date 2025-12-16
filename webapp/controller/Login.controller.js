@@ -35,12 +35,17 @@ sap.ui.define([
                     if (oData.Status === "Success") {
                         MessageToast.show("Login Successful");
 
-                        // Get router from component
-                        var oRouter = that.getOwnerComponent().getRouter();
+                        // Use UIComponent to get router for this controller's component
+                        var oRouter = sap.ui.core.UIComponent.getRouterFor(that);
 
                         if (!oRouter) {
-                            console.error("Router not found!");
-                            MessageToast.show("Navigation error: Router not initialized");
+                            console.error("Router not found via UIComponent.getRouterFor!");
+                            // Fallback
+                            oRouter = that.getOwnerComponent().getRouter();
+                        }
+
+                        if (!oRouter) {
+                            MessageToast.show("Navigation Error: Router not found.");
                             return;
                         }
 

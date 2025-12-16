@@ -63,7 +63,7 @@
                         subheader="{i18n>incidentsTileSubheader}"
                         press="onPressIncident">
                         <TileContent>
-                            <NumericContent value="{/IncidentCount}" icon="sap-icon://alert" indicator="Up" valueColor="Error"/>
+                            <NumericContent value="{view>/IncidentCount}" icon="sap-icon://alert" indicator="Up" valueColor="Error"/>
                         </TileContent>
                     </GenericTile>
 
@@ -74,7 +74,7 @@
                         subheader="{i18n>risksTileSubheader}"
                         press="onPressRisk">
                         <TileContent>
-                            <NumericContent value="{/RiskCount}" icon="sap-icon://quality-issue" indicator="Down" valueColor="Critical"/>
+                            <NumericContent value="{view>/RiskCount}" icon="sap-icon://quality-issue" indicator="Down" valueColor="Critical"/>
                         </TileContent>
                     </GenericTile>
                 </grid:CSSGrid>

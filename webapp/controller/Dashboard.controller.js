@@ -20,6 +20,13 @@ sap.ui.define([
             var oProfileModel = new JSONModel();
             this.getView().setModel(oProfileModel, "entry");
 
+            // View model for counts
+            var oViewModel = new JSONModel({
+                IncidentCount: 0,
+                RiskCount: 0
+            });
+            this.getView().setModel(oViewModel, "view");
+
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.getRoute("RouteDashboard").attachPatternMatched(this._onObjectMatched, this);
         },
@@ -27,7 +34,6 @@ sap.ui.define([
         _onObjectMatched: function (oEvent) {
             var sEmployeeId = oEvent.getParameter("arguments").employeeId;
             if (!sEmployeeId) {
-                // Fallback or redirect if no ID
                 return;
             }
             this._loadData(sEmployeeId);
@@ -38,7 +44,6 @@ sap.ui.define([
             var that = this;
 
             // 1. Fetch Profile
-            // /profileSet(EmployeeId='...')
             var sProfilePath = "/profileSet(EmployeeId='" + sEmployeeId + "')";
             oModel.read(sProfilePath, {
                 success: function (oData) {
@@ -50,7 +55,6 @@ sap.ui.define([
             });
 
             // 2. Fetch Incidents
-            // /incidentSet?$filter=EmployeeId eq '...'
             var aIncidentFilters = [new Filter("EmployeeId", FilterOperator.EQ, sEmployeeId)];
             oModel.read("/incidentSet", {
                 filters: aIncidentFilters,
@@ -58,15 +62,7 @@ sap.ui.define([
                     var oLocalModel = that.getView().getModel("incidents");
                     oLocalModel.setData({ results: oData.results });
 
-                    // Update count in main view model if needed or specific tile model
-                    // For now, let's just use the length for the tile
-                    var oViewModel = new JSONModel({
-                        IncidentCount: oData.results.length,
-                        RiskCount: 0 // placeholder
-                    });
-                    // Merge with existing risk count if possible, but let's just set it partly first
-                    // Actually, let's wait for both to set the tile counts properly or use separate models
-                    that.getView().setModel(oViewModel); // This might overwrite, better to use named model or update property
+                    that.getView().getModel("view").setProperty("/IncidentCount", oData.results.length);
                 },
                 error: function (oError) {
                     console.error("Error fetching incidents", oError);
@@ -74,7 +70,6 @@ sap.ui.define([
             });
 
             // 3. Fetch Risks
-            // /riskSet?$filter=EmployeeId eq '...'
             var aRiskFilters = [new Filter("EmployeeId", FilterOperator.EQ, sEmployeeId)];
             oModel.read("/riskSet", {
                 filters: aRiskFilters,
@@ -82,16 +77,7 @@ sap.ui.define([
                     var oLocalModel = that.getView().getModel("risks");
                     oLocalModel.setData({ results: oData.results });
 
-                    // Update Risk Count
-                    var oViewModel = that.getView().getModel();
-                    if (oViewModel) {
-                        oViewModel.setProperty("/RiskCount", oData.results.length);
-                    } else {
-                        oViewModel = new JSONModel({
-                            RiskCount: oData.results.length
-                        });
-                        that.getView().setModel(oViewModel);
-                    }
+                    that.getView().getModel("view").setProperty("/RiskCount", oData.results.length);
                 },
                 error: function (oError) {
                     console.error("Error fetching risks", oError);
@@ -111,28 +97,33 @@ sap.ui.define([
             }
         },
 
+        _getEmployeeId: function () {
+            var oData = this.getView().getModel("entry").getData();
+            return oData ? oData.EmployeeId : null;
+        },
+
         onPressProfile: function () {
-            var sEmployeeId = this.getView().getModel("entry").getData().EmployeeId;
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.navTo("RouteProfile", {
-                employeeId: sEmployeeId
-            });
+            var sEmployeeId = this._getEmployeeId();
+            if (sEmployeeId) {
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("RouteProfile", { employeeId: sEmployeeId });
+            }
         },
 
         onPressIncident: function () {
-            var sEmployeeId = this.getView().getModel("entry").getData().EmployeeId;
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.navTo("RouteIncidentList", {
-                employeeId: sEmployeeId
-            });
+            var sEmployeeId = this._getEmployeeId();
+            if (sEmployeeId) {
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("RouteIncidentList", { employeeId: sEmployeeId });
+            }
         },
 
         onPressRisk: function () {
-            var sEmployeeId = this.getView().getModel("entry").getData().EmployeeId;
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.navTo("RouteRiskList", {
-                employeeId: sEmployeeId
-            });
+            var sEmployeeId = this._getEmployeeId();
+            if (sEmployeeId) {
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("RouteRiskList", { employeeId: sEmployeeId });
+            }
         },
 
         formatter: {
